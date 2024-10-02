@@ -32,7 +32,7 @@ Reference:
 ## @namespace asm_1
 ## @file asm_1.py
 
-
+from typing import Dict
 from ..ASMModel import constants
 from .asmbase import asm_model
 
@@ -74,7 +74,7 @@ class ASM_1(asm_model):
         # temperature difference b/t what's used and baseline (20C), degC
         self._delta_t = self._temperature - 20
 
-        self.update(ww_temp, DO)
+        self.update(self._temperature, self._bulk_DO)
 
         # The Components the ASM components IN THE REACTOR
         # For ASM #1:
@@ -106,6 +106,19 @@ class ASM_1(asm_model):
         self._rate_res = [0.0] * 8
 
         return None
+        
+        
+    def set_kinetics_20C(self, par_dict: Dict[str, float]) -> None:
+        """ """
+        kinetic_par_names = self._kinetics_20C.keys()
+        # Check if par_dict contains all the required parameters:
+        new_kinetics = {par: value for par, value in par_dict.items() if par in kinetic_par_names}
+        if set(new_kinetics.keys()) == set(kinetic_par_names):
+            self._kinetics_20C = new_kinetics
+            self.update(self._temperature, self._bulk_DO)
+        else:
+            print("Parameter dict does not include all required parameters, Not updatated")
+        return
 
 
     def _set_ideal_kinetics_20C_to_defaults(self):
