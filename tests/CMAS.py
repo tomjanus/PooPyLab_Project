@@ -45,6 +45,11 @@
 # 20190724 KZ: init
 #
 
+# Parameterize units with input values - influent concentrations, inlet flow, temperature, and selected kinetic/stoichiometric variables
+inflow_rate = 37_800
+ra_vol = 14_000 # Reactor volume
+
+from typing import List
 from PooPyLab.unit_procs.streams import splitter, pipe, WAS
 from PooPyLab.unit_procs.streams import influent, effluent
 from PooPyLab.unit_procs.bio import asm_reactor
@@ -91,12 +96,14 @@ def construct():
     splt.set_as_SRT_controller(True)
     RAS.set_downstream_main(ra)
     p5.set_downstream_main(waste)
-    inlet.set_mainstream_flow(37800)
+    
+    # Parameterize
+    inlet.set_mainstream_flow(inflow_rate)
     #splt.set_sidestream_flow(0.0)
-    splt.set_mainstream_flow(37800)  # i.e. 1.0Qi
+    splt.set_mainstream_flow(inflow_rate)  # i.e. 1.0Qi
     
     ra.set_model_condition(10, 2.0)
-    ra.set_active_vol(14000)
+    ra.set_active_vol(ra_vol)
 
     print("CMAS PFD constructed.")
 

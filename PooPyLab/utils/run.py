@@ -578,7 +578,9 @@ def backward_set_flow(start=[]):
     return None
 
 
-def get_steady_state(wwtp=[], target_SRT=5, verbose=False, diagnose=False, mn='BDF', fDO=True, DOsat=10):
+def get_steady_state(
+        wwtp=[], target_SRT=5, verbose=False, diagnose=False, mn='BDF', fDO=True, DOsat=10,
+        capture_rate=None):
     """ 
     Integrate the entire plant towards a steady state at the target SRT.
 
@@ -653,9 +655,10 @@ def get_steady_state(wwtp=[], target_SRT=5, verbose=False, diagnose=False, mn='B
         print('Initial guess =', format_sd.format(*_seed), '\n\n')
         for _r in wwtp:
             _r.assign_initial_guess(_seed)
-
-    for fc in _final_clar:
-        fc.set_capture_rate(0.992)
+    
+    if capture_rate:
+        for fc in _final_clar:
+            fc.set_capture_rate(capture_rate)
 
     forward_set_flow(wwtp)
 

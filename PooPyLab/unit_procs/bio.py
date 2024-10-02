@@ -34,6 +34,7 @@
 
 from ..unit_procs.streams import pipe
 from ..ASMModel.asm_1 import ASM_1
+from ..ASMModel.asmbase import asm_model
 from ..ASMModel import constants
 
 from scipy.integrate import solve_ivp
@@ -117,7 +118,10 @@ class asm_reactor(pipe):
 
         return None
 
-
+    def get_biological_model(self) -> asm_model:
+        """Return the biological model used in the bioreactor"""
+        return self._sludge
+    
     # ADJUSTMENTS TO COMMON INTERFACE
     #
 
@@ -314,7 +318,7 @@ class asm_reactor(pipe):
         if ww_temp > 4 and ww_temp <= 40 and DO >= 0:
             self._sludge.update(ww_temp, DO)
         else:
-            print("ERROR:", self.__name__, "given crazy temperature or DO.")
+            print("ERROR:", self.__name__, "setting temperature or DO outside normal range.")
         return None
 
    

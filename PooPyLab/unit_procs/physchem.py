@@ -119,7 +119,6 @@ class final_clarifier(splitter):
 
 
     # ADJUSTMENTS TO COMMON INTERFACE TO FIT THE NEEDS OF FINAL_CLARIFIER
-    #
 
 
     def set_as_SRT_controller(self, setting=False):
@@ -207,7 +206,7 @@ class final_clarifier(splitter):
         if 0 < capture_rate < 1:
             self._capture_rate = capture_rate
         else:
-            print('ERROR:', self.__name__, 'given unrealistic capture rate.')
+            print('ERROR:', self.__name__, 'beyond [0-1] bounds.')
         return None
 
 
@@ -292,7 +291,7 @@ class final_clarifier(splitter):
         _HRT = self._active_vol / self._total_inflow
 
         if _HRT > 15/1440:  # 15 min HRT
-            self._mo_comps[0] = 0.0
+            self._mo_comps[0] = 0.0 # DO is the first element in the vector of state variables
             self._so_comps[0] = 0.0
 
         return None

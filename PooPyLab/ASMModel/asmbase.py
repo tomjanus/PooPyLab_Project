@@ -127,6 +127,10 @@ class asm_model(object):
         self._set_stoichs()
         return None
 
+    @property
+    def KLa(self) -> float:
+        """ """
+        return self._KLa
 
     def set_KLa(self, kla):
         """

@@ -1918,7 +1918,7 @@ class WAS(pipe):
         return inventory
 
 
-    def set_WAS_flow(self, SRT=5, reactor_list=[], effluent_list=[]):
+    def set_WAS_flow(self, SRT, reactor_list=[], effluent_list=[]):
         """
         Set the waste sludge flow to meet the WWTP's solids retention time.
 
